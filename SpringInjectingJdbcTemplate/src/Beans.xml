@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+<bean id="datasource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName"
+			value="${db.driverClassName}" />
+		<property name="url"
+			value="${db.url}" />
+		<property name="password" value="${db.password}" />
+		<property name="username" value="${db.username}" />
+	</bean>
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<property name="locations">
+	<list>
+	<value>db.properties</value>
+	</list>
+	</property>
+	</bean>
+	
+<bean id="empServicesImpl" class="com.spring.servicesimpl.EmpServicesImpl">
+<property name="empDao" ref="empDaoImpl"></property>
+</bean>
+<bean id="empDaoImpl" class="com.spring.daoimp.EmpDaoImpl">
+<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+</bean>
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+<constructor-arg name="dataSource" ref="datasource"/>
+</bean>
+    </beans>

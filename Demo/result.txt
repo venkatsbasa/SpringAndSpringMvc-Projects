@@ -1,0 +1,6 @@
+ ACCOUNT_NO ACCOUNT_BAL ACCOUNT_TYPE ACCOUNT_NAME  
+ ---------- ----------- ------------ ------------- 
+    1234567      500000 savings      venkataramana
+    1234568     1900000 savings      sappu        
+    1234569     1200000 savings      sappuvenkat  
+

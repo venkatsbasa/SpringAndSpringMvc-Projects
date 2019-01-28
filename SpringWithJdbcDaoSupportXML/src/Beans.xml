@@ -1,0 +1,30 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+<bean id="datasource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName"
+			value="org.apache.derby.jdbc.ClientDriver" />
+		<property name="url"
+			value="jdbc:derby://localhost:1527/venkatsdb" />
+		<property name="password" value="user" />
+		<property name="username" value="user" />
+	</bean>
+<bean id="empServicesImpl" class="com.spring.servicesimpl.EmpServicesImpl">
+<property name="empDao" ref="empDaoImpl"></property>
+</bean>
+<bean id="empDaoImpl" class="com.spring.daoimp.EmpDaoImpl">
+<!-- <property name="datasource" ref="datasource"></property> --><property name="jdbcTemplate" ref="jdbcTemplate"></property>
+
+</bean>
+
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+<property name="dataSource" ref="datasource"></property>
+</bean>
+
+
+
+    </beans>

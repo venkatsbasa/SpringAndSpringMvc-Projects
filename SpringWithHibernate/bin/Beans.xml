@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="datasource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="${db.driverClassName}" />
+		<property name="url" value="${db.url}" />
+		<property name="password" value="${db.password}" />
+		<property name="username" value="${db.username}" />
+	</bean>
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>db.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="empServicesImpl"
+		class="com.spring.servicesimpl.EmpServicesImpl">
+		<property name="empDao" ref="empDao"></property>
+	</bean>
+	<bean id="empDao" class="com.spring.daoimp.EmpDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+
+	</bean>
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<constructor-arg name="sessionFactory"
+			ref="sessionFactroy" />
+	</bean>
+
+	<bean id="sessionFactroy"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="datasource"></property>
+		<property name="annotatedClasses">
+			<array>
+				<value>com.spring.model.Employee</value>
+			</array>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.DerbyDialect</prop>
+				<prop key="hibernate.hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.format_sql">true</prop>
+
+			</props>
+		</property>
+	</bean>
+
+
+</beans>
